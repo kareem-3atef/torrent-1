@@ -1,25 +1,25 @@
-
 services:
   qbittorrent:
     image: linuxserver/qbittorrent
     container_name: qbittorrent
     ports:
-      - "8080:8080"  # Adjust port mapping as needed
+      - "8080:8080" # Adjust port mapping as needed
     volumes:
-      - ./downloads:/downloads  # Adjust this to your torrent download location
-      - ./qbittorrent-config:/config  # Adjust this to where you want to store qbittorrent config
+      - ./downloads:/downloads # Adjust this to your torrent download location
+      - ./qbittorrent-config:/config # Adjust this to where you want to store qbittorrent config
+      - ./qBittorrent.conf:/config/qBittorrent.conf # Optional: custom config file
     restart: unless-stopped
     environment:
       - WEBUI_PORT=8080
-      - PUID=1000  # User ID (optional, adjust based on your setup)
-      - PGID=1000  # Group ID (optional, adjust based on your setup)
+      - PUID=1000 # User ID (optional, adjust based on your setup)
+      - PGID=1000 # Group ID (optional, adjust based on your setup)
 
   nginx:
     image: nginx:alpine
     container_name: nginx
     volumes:
       - ./downloads:/usr/share/nginx/html
-      - ./nginx.conf:/etc/nginx/nginx.conf  # You can customize your nginx configuration
+      - ./nginx.conf:/etc/nginx/nginx.conf # You can customize your nginx configuration
     ports:
       - "80:80"
     restart: unless-stopped
